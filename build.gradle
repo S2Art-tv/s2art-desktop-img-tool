@@ -15,5 +15,6 @@ repositories {
 dependencies {
     testImplementation     'junit:junit:4.13'
     implementation group: 'javax.activation', name: 'activation', version: '1.1.1'
+    implementation 'com.formdev:flatlaf:1.2'
 }
 

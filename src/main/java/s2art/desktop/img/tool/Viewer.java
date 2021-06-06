@@ -5,6 +5,21 @@
  */
 package s2art.desktop.img.tool;
 
+import javax.swing.UIManager;
+import s2art.desktop.img.tool.ViewerToolsController;
+import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.io.File;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 /**
  *
  * @author vvbv
@@ -14,10 +29,37 @@ public class Viewer extends javax.swing.JFrame {
     /**
      * Creates new form Viewer
      */
+    
+    private ArrayList<String> files;
+    private int fileListCursor = 0;
+    private ViewerToolsController ViewerTools = new ViewerToolsController();
+    private String lastImagePath = "";
+    private String defaultPictureFolder = System.getProperty("user.home") + 
+            System.getProperty("file.separator") + "Pictures";
+    
     public Viewer() {
+        
+        try {
+            UIManager.setLookAndFeel( new FlatDarkLaf() );
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
+        }
         initComponents();
     }
-
+    
+    private void showImage(String filePath){
+        this.lastImagePath = filePath;
+        ImageIcon icon = new ImageIcon(filePath);
+        icon = new ImageIcon(
+                icon.getImage().getScaledInstance(
+                    350, 400,
+                    Image.SCALE_SMOOTH
+                )
+            );
+        viewLabel.setIcon(icon);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,23 +69,179 @@ public class Viewer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pathField = new javax.swing.JTextField();
+        openFolderBtn = new javax.swing.JButton();
+        viewLabel = new javax.swing.JLabel();
+        backBrn = new javax.swing.JButton();
+        nextBtn = new javax.swing.JButton();
+        playBtn = new javax.swing.JButton();
+        openFileBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(76, 80, 82));
+
+        openFolderBtn.setText("Folder");
+        openFolderBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                openFolderBtnMouseClicked(evt);
+            }
+        });
+        openFolderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFolderBtnActionPerformed(evt);
+            }
+        });
+
+        viewLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        backBrn.setText("Back");
+        backBrn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBrnActionPerformed(evt);
+            }
+        });
+
+        nextBtn.setText("Next");
+        nextBtn.setToolTipText("");
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
+
+        playBtn.setText("Play");
+
+        openFileBtn.setText("File");
+        openFileBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                openFileBtnMouseClicked(evt);
+            }
+        });
+        openFileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pathField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(openFileBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(openFolderBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backBrn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(playBtn)
+                        .addGap(0, 160, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(openFolderBtn)
+                    .addComponent(openFileBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(viewLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(backBrn)
+                    .addComponent(nextBtn)
+                    .addComponent(playBtn))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void openFolderBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openFolderBtnMouseClicked
+        
+    }//GEN-LAST:event_openFolderBtnMouseClicked
+
+    private void openFileBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_openFileBtnMouseClicked
+          
+    }//GEN-LAST:event_openFileBtnMouseClicked
+
+    private void openFileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileBtnActionPerformed
+        FileFilter imageFilter = new FileNameExtensionFilter(
+            "Image files", ImageIO.getReaderFileSuffixes()
+        );
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(this.defaultPictureFolder));
+        chooser.setDialogTitle("Choose File");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.addChoosableFileFilter(imageFilter);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            String path = chooser.getSelectedFile().toString();
+            this.pathField.setText(path);
+            this.showImage(chooser.getSelectedFile().toString());
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_openFileBtnActionPerformed
+
+    private void openFolderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFolderBtnActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(
+            !this.lastImagePath.equals("") ? 
+             new File(this.lastImagePath).getParentFile(): 
+             new File(this.defaultPictureFolder)
+        );
+        chooser.setDialogTitle("Choose Folder");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            System.out.println(chooser.getCurrentDirectory());
+            String path = chooser.getCurrentDirectory().toString();
+            this.pathField.setText(path);
+            this.files = this.ViewerTools.getImages(path, false);
+            this.fileListCursor = 0;
+            this.showImage(this.files.get( this.fileListCursor ));
+        } else {
+            System.out.println("No Selection ");
+        }
+    }//GEN-LAST:event_openFolderBtnActionPerformed
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        int limitPos = this.files.size() - 1;
+        if(this.fileListCursor + 1 > limitPos){
+            this.fileListCursor = 0;
+        }
+        this.showImage(this.files.get(this.fileListCursor));
+    }//GEN-LAST:event_nextBtnActionPerformed
+
+    private void backBrnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBrnActionPerformed
+        int limitPos = this.files.size() - 1;
+        if(this.fileListCursor - 1 < 0){
+            this.fileListCursor = limitPos;
+        }
+        this.showImage(this.files.get(this.fileListCursor));
+    }//GEN-LAST:event_backBrnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backBrn;
+    private javax.swing.JButton nextBtn;
+    private javax.swing.JButton openFileBtn;
+    private javax.swing.JButton openFolderBtn;
+    private javax.swing.JTextField pathField;
+    private javax.swing.JButton playBtn;
+    private javax.swing.JLabel viewLabel;
     // End of variables declaration//GEN-END:variables
 }

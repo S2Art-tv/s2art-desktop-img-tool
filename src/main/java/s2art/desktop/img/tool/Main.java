@@ -5,8 +5,6 @@
  */
 package s2art.desktop.img.tool;
 
-import s2art.desktop.img.tool.ViewerToolsController;
-
 /**
  *
  * @author vvbv
@@ -18,13 +16,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        ViewerToolsController VTC = new ViewerToolsController();
-        System.out.println(VTC.cleanURI("C:\\Users\\jeiso\\Seafile\\Debian Pictures\\RefDebian\\"));
-        System.out.println(VTC.getImages("C:\\Users\\jeiso\\Seafile\\Debian Pictures\\RefDebian", true));
-
-        //Viewer viewer = new Viewer();
-        //viewer.setVisible(true);
+        Viewer viewer = new Viewer();
+        viewer.setVisible(true);
     }
     
 }

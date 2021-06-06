@@ -1,8 +1,14 @@
 s2art/desktop/img/tool/OSValidator.java
  s2art.desktop.img.tool.OSValidator
-s2art/desktop/img/tool/Viewer.java
- s2art.desktop.img.tool.Viewer
 s2art/desktop/img/tool/ViewerToolsController.java
  s2art.desktop.img.tool.ViewerToolsController
+s2art/desktop/img/tool/Viewer.java
+ s2art.desktop.img.tool.Viewer
+ s2art.desktop.img.tool.Viewer$1
+ s2art.desktop.img.tool.Viewer$2
+ s2art.desktop.img.tool.Viewer$3
+ s2art.desktop.img.tool.Viewer$4
+ s2art.desktop.img.tool.Viewer$5
+ s2art.desktop.img.tool.Viewer$6
 s2art/desktop/img/tool/Main.java
  s2art.desktop.img.tool.Main
