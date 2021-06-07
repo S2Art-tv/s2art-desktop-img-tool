@@ -205,10 +205,8 @@ public class Viewer extends javax.swing.JFrame {
         chooser.setDialogTitle("Choose Folder");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
-
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            System.out.println(chooser.getCurrentDirectory());
-            String path = chooser.getCurrentDirectory().toString();
+            String path = chooser.getSelectedFile().toString();
             this.pathField.setText(path);
             this.files = this.ViewerTools.getImages(path, false);
             this.fileListCursor = 0;
