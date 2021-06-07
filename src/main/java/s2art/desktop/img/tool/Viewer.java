@@ -220,6 +220,8 @@ public class Viewer extends javax.swing.JFrame {
         int limitPos = this.files.size() - 1;
         if(this.fileListCursor + 1 > limitPos){
             this.fileListCursor = 0;
+        }else{
+            this.fileListCursor++;
         }
         this.showImage(this.files.get(this.fileListCursor));
     }//GEN-LAST:event_nextBtnActionPerformed
@@ -228,6 +230,8 @@ public class Viewer extends javax.swing.JFrame {
         int limitPos = this.files.size() - 1;
         if(this.fileListCursor - 1 < 0){
             this.fileListCursor = limitPos;
+        }else{
+            this.fileListCursor--;
         }
         this.showImage(this.files.get(this.fileListCursor));
     }//GEN-LAST:event_backBrnActionPerformed
